@@ -18,7 +18,7 @@ let editorLib = {
         codeEditor.session.setMode("ace/mode/c_cpp");
 
         //Boilerplate
-        codeEditor.setValue(defaultCode);
+        // codeEditor.setValue(defaultCode);
         codeEditor.clearSelection();
 
         //Options
