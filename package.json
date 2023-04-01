@@ -6,7 +6,8 @@
   "scripts": {
     "build:css": "tailwind build src/style.css -o public/style.css",
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "echo 'no build required'"
   },
   "keywords": [],
   "author": "",
