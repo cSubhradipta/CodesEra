@@ -27,7 +27,7 @@ function sendInstance(room, element, instance){
 }
 
 function updateInstance(room, data){
-  editors = {codeEditor: "code", inputField: "input", outputField: "output"};
+  let editors = {codeEditor: "code", inputField: "input", outputField: "output"};
   if(["codeEditor", "inputField", "outputField"].includes(data.element)){
     const editor = ace.edit(editors[data.element]);
     editor.setValue(data.instance);
