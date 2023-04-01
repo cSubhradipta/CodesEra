@@ -7,7 +7,7 @@ const { username, room } = Qs.parse(location.search, {
   ignoreQueryPrefix: true,
 }); 
 
-let url = "http://localhost:5000/"
+let url = "https://codesera.onrender.com"
 
 const options = {
     "force new connection": true,
