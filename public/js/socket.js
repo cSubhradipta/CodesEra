@@ -18,12 +18,81 @@ const options = {
 
 var socket = io(url, options);
 
+function sendInstance(room, element, instance){
+  socket.emit('sendInstance', {
+    room: room,
+    element: element,
+    instance: instance
+  });
+}
+
+function updateInstance(room, data){
+  editors = {codeEditor: "code", inputField: "input", outputField: "output"};
+  if(["codeEditor", "inputField", "outputField"].includes(data.element)){
+    const editor = ace.edit(editors[data.element]);
+    editor.setValue(data.instance);
+    console.log(editors[data.element]);
+    // data.element.setValue(data.instance);
+  } else {
+    document.getElementById(data.element).value = data.instance;
+  }
+}
+
 socket.emit('joinRoom', { username, room });
+socket.emit('getInstance', room); //need to check
 
 socket.on('roomUsers', ({ room, users }) => {
   outputRoomName(room);
   outputUsers(users);
 });
+
+socket.on('getInstances', function(instances){
+  codeEditor.setValue(instances.codeData);
+  inputField.setValue(instances.inputData);
+  outputField.setValue(instances.outputData);
+  document.getElementById('lang').value = instances.langData;
+  document.getElementById('filename').value = instances.filenameData;
+});
+
+const codeArea = document.getElementById('code');
+codeArea.addEventListener("keyup", function(){
+    const instance = codeEditor.getValue();
+    sendInstance(room, 'codeData', instance);
+});
+
+const inputArea = document.getElementById('input');
+inputArea.addEventListener("keyup", function(){
+    const instance = inputField.getValue();
+    sendInstance(room, 'inputData', instance);
+});
+
+const outputArea = document.getElementById('output');
+outputArea.addEventListener("change", function(){
+    const instance = outputField.getValue();
+    sendInstance(room, 'outputData', instance);
+});
+
+const languageArea = document.getElementById('lang');
+languageArea.addEventListener("change", function(){
+    const instance = languageArea.value;
+    sendInstance(room, 'langData', instance);
+});
+
+const filenameArea = document.getElementById('filename');
+filenameArea.addEventListener("change", function(){
+    const instance = filenameArea.value;
+    sendInstance(room, 'filenameData', instance);
+});
+
+socket.on('getInstances', function(instances){
+  updateInstance(room, {element: 'codeEditor', instance: instances.codeData});
+  updateInstance(room, {element: 'inputField', instance: instances.inputData});
+  updateInstance(room, {element: 'outputField', instance: instances.outputData});
+  updateInstance(room, {element: 'lang', instance: instances.langData});
+  updateInstance(room, {element: 'filename', instance: instances.filenameData});
+});
+
+
 
 socket.on('message', (message) => {
   console.log(message);
@@ -43,15 +112,15 @@ chatForm.addEventListener('submit', (e) => {
   e.target.elements.msg.focus();
 });
 
-socket.on('getcode', (codeData) => {
-  codeEditor.setValue(codeData);
-  codeEditor.clearSelection();
-});
-const codeArea = document.getElementById('code');
-codeArea.addEventListener("keyup", function(){
-    const codeText = codeEditor.getValue();
-    socket.emit('sendcode', codeText);
-});
+// socket.on('getcode', (codeData) => {
+//   codeEditor.setValue(codeData);
+//   codeEditor.clearSelection();
+// });
+// const codeArea = document.getElementById('code');
+// codeArea.addEventListener("keyup", function(){
+//     const codeText = codeEditor.getValue();
+//     socket.emit('sendcode', codeText);
+// });
 
 function firstName(name){
   let fName = name.split(" ");

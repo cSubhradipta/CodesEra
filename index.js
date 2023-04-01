@@ -21,16 +21,8 @@ server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 const botName = "CodesEra";
 
-let codeData = '';
-
+let rooms = {};
 io.on("connection", (socket) => {
-
-  socket.emit('getcode', codeData);
-  socket.on('sendcode', (codeText) => {
-    console.log(codeText);
-    codeData = codeText;
-    socket.broadcast.emit('getcode', codeData);
-  });
 
   socket.on("joinRoom", ({ username, room }) => {
     const user = userJoin(socket.id, username, room);
@@ -48,7 +40,38 @@ io.on("connection", (socket) => {
       room: user.room,
       users: getRoomUsers(user.room),
     });
+
+    if(!rooms[user.room]){
+      rooms[user.room] = {
+        codeData: '',
+        inputData: '',
+        outputData: '',
+        langData: '',
+        filenameData: ''
+      }
+    }
+    socket.emit('getInstances', rooms[user.room]);
   });
+
+  socket.on('sendInstance', (data) => {
+    const room = data.room;
+    const element = data.element;
+    const instance = data.instance;
+    if(!rooms[room]){
+      rooms[room] = {};
+    }
+    rooms[room][element] = instance;
+    console.log(rooms);
+    socket.to(room).emit('getInstances', rooms[room]);
+  });
+
+
+  // socket.emit('getcode', codeData);
+  // socket.on('sendcode', (codeText) => {
+  //   console.log(codeText);
+  //   codeData = codeText;
+  //   socket.broadcast.emit('getcode', codeData);
+  // });
 
   socket.on("chatMessage", (msg) => {
     const user = getCurrentUser(socket.id);
