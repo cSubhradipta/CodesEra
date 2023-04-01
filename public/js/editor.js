@@ -82,13 +82,3 @@ changeFontSize.addEventListener("input", ()=>{
     console.log(fontSize);
     editorLib.init();
 });
-
-// let codeArea = codeEditor.getValue();
-// codeEditor.addEventListener("change", ()=>{
-    // fontSize = changeFontSize.value + "pt";
-
-    // console.log(codeEditor.getValue());
-    // editorLib.init();
-// });
-
-// console.log(codeEditor.getValue());

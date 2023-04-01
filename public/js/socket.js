@@ -31,6 +31,7 @@ function updateInstance(room, data){
   if(["codeEditor", "inputField", "outputField"].includes(data.element)){
     const editor = ace.edit(editors[data.element]);
     editor.setValue(data.instance);
+    editor.clearSelection();
     console.log(editors[data.element]);
     // data.element.setValue(data.instance);
   } else {
@@ -52,6 +53,9 @@ socket.on('getInstances', function(instances){
   outputField.setValue(instances.outputData);
   document.getElementById('lang').value = instances.langData;
   document.getElementById('filename').value = instances.filenameData;
+  codeEditor.clearSelection();
+  inputField.clearSelection();
+  outputField.clearSelection();
 });
 
 const codeArea = document.getElementById('code');
