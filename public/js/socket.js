@@ -12,7 +12,7 @@ let url = "https://codesera.onrender.com"
 const options = {
     "force new connection": true,
     reconnectionAttempts: "Infinity",
-    timeout: 10000,
+    timeout: 1800000,
     transports: ["websocket"],
 };
 
@@ -53,9 +53,6 @@ socket.on('getInstances', function(instances){
   outputField.setValue(instances.outputData);
   document.getElementById('lang').value = instances.langData;
   document.getElementById('filename').value = instances.filenameData;
-  codeEditor.clearSelection();
-  inputField.clearSelection();
-  outputField.clearSelection();
 });
 
 const codeArea = document.getElementById('code');
