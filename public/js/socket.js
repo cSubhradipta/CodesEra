@@ -49,8 +49,11 @@ socket.on('roomUsers', ({ room, users }) => {
 
 socket.on('getInstances', function(instances){
   codeEditor.setValue(instances.codeData);
+  codeEditor.clearSelection();
   inputField.setValue(instances.inputData);
+  inputField.clearSelection();
   outputField.setValue(instances.outputData);
+  outputField.clearSelection();
   document.getElementById('lang').value = instances.langData;
   document.getElementById('filename').value = instances.filenameData;
 });
