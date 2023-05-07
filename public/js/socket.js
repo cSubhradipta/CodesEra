@@ -223,7 +223,7 @@ document.getElementById('leave-btn').addEventListener('click', () => {
 });
 
 document.getElementById("copy-room-link").addEventListener("click", function() {
-  const url = "localhost:3000/join/" + room;
+  const url = "https://codesera.onrender.com/join/" + room;
   navigator.clipboard.writeText(url).then(function() {
     const alertDiv = document.createElement("div");
     alertDiv.textContent = "Room Link Copied!";
