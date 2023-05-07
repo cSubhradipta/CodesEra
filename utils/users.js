@@ -1,10 +1,20 @@
 const users = [];
 
 // Join user to chat
-function userJoin(id, username, room) {
-  const user = { id, username, room };
+// function userJoin(id, username, room, userimage) {
+//   const user = { id, username, room, userimage};
 
+//   users.push(user);
+//   console.log(users);
+//   return user;
+// }
+function userJoin(id, username, room) {
+  //console.log("userjoin func: ", userimage);
+  const user = { id, username, room };
+  //console.log('userJoin:', user); // log the user object to check the value of the userimage property
+  //console.log('userimage: ', userimage);
   users.push(user);
+  //console.log('users:', users); // log the entire users array to check if the user object is added correctly
 
   return user;
 }
