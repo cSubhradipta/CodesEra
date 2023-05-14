@@ -221,8 +221,6 @@ app.post('/workspace', function(req, res){
 // });
 
 
-
-
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
@@ -273,14 +271,6 @@ io.on("connection", (socket) => {
     console.log(rooms);
     socket.to(room).emit('getInstances', rooms[room]);
   });
-
-
-  // socket.emit('getcode', codeData);
-  // socket.on('sendcode', (codeText) => {
-  //   console.log(codeText);
-  //   codeData = codeText;
-  //   socket.broadcast.emit('getcode', codeData);
-  // });
 
   socket.on("chatMessage", (msg) => {
     const user = getCurrentUser(socket.id);
