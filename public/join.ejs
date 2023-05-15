@@ -96,7 +96,7 @@
               </div>
   
               <p class="text-white mt-6 text-center text-sm">Don't have Room ID? &ensp;
-                <a href="#!" class="text-blue-400 hover:text-blue-500 focus:text-blue-500 transition duration-200 ease-in-out">Create a new room</a>
+                <a href="javascript:void(0)" class="text-blue-400 hover:text-blue-500 focus:text-blue-500 transition duration-200 ease-in-out" id="gen-room">Create a new room</a>
               </p>
             </form>
           </div>
@@ -112,5 +112,34 @@
   <!-- <script src="./js/socket.js"></script> -->
   
   <!-- <script src="../utils/join.js"></script> -->
+  <script>
+    function generateRoomCode() {
+      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var code = '';
+      
+      for (var i = 0; i < 4; i++) {
+        code += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      
+      code += '-';
+      
+      for (var i = 0; i < 4; i++) {
+        code += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      
+      return code;
+    }
+
+    const roomField = document.getElementById('room-id');
+    const genBtn = document.getElementById('gen-room');
+
+    genBtn.addEventListener("click", () => {
+      var randomCode = generateRoomCode();
+      roomField.value = randomCode;
+
+      window.location.href = '/join/' + randomCode;
+    });
+    //console.log(randomCode);
+  </script>
 
 </html>
