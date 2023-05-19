@@ -10,7 +10,7 @@
     <title>CodesEra</title>
   </head>
 
-  <body class="font-body">
+  <body class="font-body overflow-hidden">
     <!-- <div class="text-white container mx-auto p-5 overflow-hidden">
 
       <div class="flex justify-around lg:justify-between">
@@ -70,13 +70,29 @@
     <section>
       <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-32 lg:px-12">
           <h1 class="mb-4 text-4xl font-extrabold tracking-tight md:text-5xl lg:text-7xl text-white"></h1>
-          <div class="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4 sm:px-8">
-             
-            <a href="/auth/google">
-              <button type="button" class="login-with-google-btn mt-8" >
-                <span class="text-gray-600">Sign in with Google</span> 
-              </button>
-            </a>          
+          <div class="flex flex-col mb-8 lg:mb-16 space-y-4 sm:justify-center sm:space-y-0 sm:space-x-4 sm:px-8">
+             <div class="ml-4">
+              <a href="/auth/google">
+                <button type="button" class="login-with-google-btn mt-6" >
+                  <span class="text-gray-600">Sign in with Google</span> 
+                </button>
+              </a>       
+             </div>
+             <div>
+              <a href="javascript:void(0)">
+                <button type="button" class="login-with-linkedin-btn mt-6 text-white" >
+                  <i class="bi bi-linkedin" style="font-size: 20px;"></i><span class="pl-4">Sign in with LinkedIn</span> 
+                </button>
+              </a>      
+             </div>
+             <div>
+              <a href="javascript:void(0)">
+                <button type="button" class="login-with-github-btn mt-6 text-white">
+                  <i class="bi bi-github" style="font-size: 20px;"></i><span class="pl-4">Sign in with Github</span> 
+                </button>
+              </a>      
+             </div>
+                
           </div>
           
       </div>
