@@ -9,7 +9,7 @@ const csContainer = document.getElementById('codespace');
 chatBtn.addEventListener("click", () => {
     chatContainer.classList.toggle('hidden');
     if(chatContainer.classList.contains('hidden')){
-        wbWrapper.style.maxWidth = '60rem';
+        wbWrapper.style.maxWidth = ((window.innerWidth) <= 860 ? '55rem' : '60rem');
     } else {
         wbWrapper.style.maxWidth = '40rem';
     }
@@ -17,7 +17,7 @@ chatBtn.addEventListener("click", () => {
 
 chatCloseBtn.addEventListener("click", () => {
     chatContainer.classList.add('hidden');
-    wbWrapper.style.maxWidth = '60rem';
+    wbWrapper.style.maxWidth = ((window.innerWidth) <= 860 ? '55rem' : '60rem');
 });
 
 wbBtn.addEventListener("click", () => {
