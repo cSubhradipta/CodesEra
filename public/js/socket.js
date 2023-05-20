@@ -7,8 +7,8 @@ const userList = document.getElementById('users');
 //   ignoreQueryPrefix: true,
 // }); 
 
-// let url = "https://codesera.onrender.com"
-let url = "http://localhost:3000"
+let url = "https://codesera.onrender.com"
+// let url = "http://localhost:3000"
 
 const options = {
     "force new connection": true,
