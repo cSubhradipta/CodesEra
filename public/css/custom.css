@@ -1,10 +1,13 @@
 body {
     height: 100%;
     background-size: 1400px 1400px;
-
-
     background: rgb(1,19,43);
     background: radial-gradient(circle at center, rgba(1,19,43,1) 0%, rgba(0,0,0,1) 93%, rgba(1,12,15,1) 100%);
+}
+
+#permission{
+  /* background: rgb(1,19,43); */
+    background: radial-gradient(circle at center, rgba(1,19,43,1) 0%, rgba(0,0,0,1) 70%, rgba(1,12,15,1) 100%);
 }
 
 .login-with-google-btn {

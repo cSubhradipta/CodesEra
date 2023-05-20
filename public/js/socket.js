@@ -7,7 +7,8 @@ const userList = document.getElementById('users');
 //   ignoreQueryPrefix: true,
 // }); 
 
-let url = "https://codesera.onrender.com"
+// let url = "https://codesera.onrender.com"
+let url = "http://localhost:3000"
 
 const options = {
     "force new connection": true,
@@ -90,12 +91,53 @@ filenameArea.addEventListener("change", function(){
     sendInstance(room, 'filenameData', instance);
 });
 
+const checkbox = document.getElementById('allowContributionCheckbox');
+
+checkbox.addEventListener('change', function() {
+  // const instance = languageArea.value;
+  sendInstance(room, 'allowOthers', this.checked);
+  // console.log("state: ", this.checked);
+  if (this.checked) {
+    // console.log("Checkbox is checked..");
+  } else {
+    // console.log("Checkbox is not checked..");
+  }
+});
+
 socket.on('getInstances', function(instances){
   updateInstance(room, {element: 'codeEditor', instance: instances.codeData});
   updateInstance(room, {element: 'inputField', instance: instances.inputData});
   updateInstance(room, {element: 'outputField', instance: instances.outputData});
   updateInstance(room, {element: 'lang', instance: instances.langData});
   updateInstance(room, {element: 'filename', instance: instances.filenameData});
+
+
+
+  var tempUser = document.getElementsByClassName('temp-user')[0].innerText;
+  if(tempUser === instances.host){
+    // console.log("admin: ", instances.host);
+    document.getElementById('settingBtn').classList.remove('hidden');
+  } else {
+    // console.log("non-admin: ", instances.host);
+    let editor = ace.edit('code');
+    let ipeditor = ace.edit('input');
+    let langfield = document.getElementById('lang');
+    let filename = document.getElementById('filename');
+    if(instances.allowOthers == false){
+      // console.log('Allow users disabled');
+      editor.setOptions({readOnly : true});
+      ipeditor.setOptions({readOnly : true});
+      langfield.disabled = true;
+      filename.readOnly = true;
+    } else {
+      // console.log('Allow users enabled');
+      editor.setOptions({readOnly : false});
+      ipeditor.setOptions({readOnly : false});
+      langfield.disabled = false;
+      filename.readOnly = false;
+    }
+  }
+  //updateInstance(room, {element: 'filename', instance: instances.filenameData});
 });
 
 
@@ -198,14 +240,13 @@ function createAvatar(name){
 
 function outputUsers(users) {
   userList.innerHTML = '';
-  // console.log(users);
   users.forEach((user) => {
     const div = document.createElement('div');
     div.classList.add('user', 'flex', 'w-full', 'text-white', 'text-sm', 'my-4');
     div.innerHTML = `
         <!-- <img src="${user.userimage}" alt="${user.username}" class="user_avatar rounded-full" style="width: 25px; height: 25px; position: relative;"> -->
         <div class="user_badge  flex justify-center items-center bg-blue-700 w-8 h-8 py-auto text-center font-medium uppercase rounded-full">` + createAvatar(user.username) + `</div>
-        <div class="user_name flex items-center pl-2 text-` + ((user.username !== username) ? "white" : "blue-400") + ` font-medium" style="flex-wrap: wrap;"><p style="max-width: 175px; flex-shrink: 0; width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.username}</p></div>
+        <div class="user_name flex items-center pl-2 text-` + ((user.username !== username) ? "white" : "blue-400") + ((user.username !== username) ? " " : " temp-user") + ` font-medium" style="flex-wrap: wrap;"><p style="max-width: 175px; flex-shrink: 0; width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.username}</p></div>
     `;
     userList.appendChild(div);
   });

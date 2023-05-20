@@ -13,6 +13,7 @@
   <body class="font-body">
     <script>
       const username = '<%= userData.name %>';
+      const useremail = '<%= userData.email %>';
       const room = '<%= room %>';
       const userimage = '<%= userData.imageUrl %>';
       
@@ -275,6 +276,12 @@
                   <i class="bi bi-chat-dots"></i>
                 </button>
               </div>
+
+              <div class="mx-auto my-4 hidden" id="settingBtn">
+                <button id="host-access-btn" type="button" data-bs-toggle="tooltip" title="Control Access" class="ml-1 inline-block h-10 w-10 rounded-full text-xl font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-white hover:bg-opacity-10 hover:shadow-lg focus:bg-gray-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-transparent active:shadow-lg">
+                  <i class="bi bi-gear"></i>
+                </button>
+              </div>
             </div>
           </div> 
         </div>
@@ -283,6 +290,36 @@
 
     <div class="fixed right-0 top-0 z-50 m-4">
       <div id="alert-container">
+      </div>
+    </div>
+
+    <div class="hidden fixed z-50 bottom-0 right-8 m-6 max-w-sm rounded-md overflow-hidden text-white border border-blue-400 shadow-lg" id="permission">
+  
+      <div class="px-6 py-4">
+        <div class="flex justify-between font-bold text-xl mb-2">
+          <div>Control Access</div>
+          <div class="close">
+            <button type="button" id="close-permission" class="ml-1 inline-block h-8 w-8 rounded-full font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-white hover:bg-opacity-10 hover:shadow-lg focus:bg-gray-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-opacity-10 active:shadow-lg">
+              <i class="bi bi-x-lg text-sm"></i>
+            </button>
+          </div>
+        </div>
+        <div class="flex flex-col mb-6">
+        <label class="w-2/3 block text-blue-400 font-medium">
+          <input class="mr-2 leading-tight" type="checkbox" id="allowContributionCheckbox" checked>
+          <span class="text-sm">
+            Allow others to collaborate
+          </span>
+        </label>
+        <p class="text-gray-400 text-xs italic">You have the access to allow/ restrict peers from being collaborate.</p>
+      </div>
+      <div class="flex">
+        <div class="w-2/3">
+          <button class="shadow bg-red-600 hover:bg-red-700 focus:shadow-outline focus:outline-none text-white text-sm font-medium py-1.5 px-4 rounded-md" type="button">
+            Mute everyone
+          </button>
+        </div>
+      </div>
       </div>
     </div>
 

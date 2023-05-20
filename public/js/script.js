@@ -62,7 +62,17 @@ function getLocalStream() {
           console.log('User blocked audio permission');
         } else {
             muteBtn.disabled = false;
-          console.error(`An error occurred: ${err}`);
         }
       });
   }
+
+const permit = document.getElementById('permission');
+const permitBtn = document.getElementById('host-access-btn');
+const closePermissionBtn = document.getElementById('close-permission');
+
+permitBtn.addEventListener("click", () => {
+    permit.classList.toggle('hidden');
+});
+closePermissionBtn.addEventListener("click", () => {
+    permit.classList.add('hidden');
+});

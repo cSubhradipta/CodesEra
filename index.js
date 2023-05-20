@@ -207,7 +207,7 @@ app.post('/workspace', function(req, res){
   const newImgUrl = userData.imageUrl.replace("=s96-c", "=s200-c");
   console.log(userData.imageUrl, newImgUrl);
   req.session.roomId = room;
-  res.render('workspace', {username: userData.name, userimage: userData.imageUrl, room: room, userData: userData, userImg: newImgUrl});
+  res.render('workspace', {useremail: userData.email, username: userData.name, userimage: userData.imageUrl, room: room, userData: userData, userImg: newImgUrl});
 });
 
 // app.get('/leave', (req, res) => {
@@ -228,12 +228,30 @@ const botName = "CodesEra";
 
 let rooms = {};
 io.on("connection", (socket) => {
-  
+
   socket.on("joinRoom", ({username, room}) => {
-    console.log(`User ${username} joined room ${room} with image`);
+    console.log(`User ${username} joined room ${room} with email`);
     const user = userJoin(socket.id, username, room);
-    console.log(user);
+    // socket.join(user.room);
+    if(!rooms[user.room]){
+      rooms[user.room] = {
+        host: '',
+        participants: [],
+        codeData: '',
+        inputData: '',
+        outputData: '',
+        langData: '',
+        filenameData: '',
+        allowOthers: true
+      }
+    }
+    if(rooms[user.room].participants.length == 0){
+      rooms[user.room].host = user.username;
+    }
+    rooms[user.room].participants.push(user.username);
+    // console.log(user);
     // console.log(user.userimage);
+    // rooms[room].participants.push(username);
     socket.join(user.room);
 
     socket.broadcast
@@ -248,15 +266,16 @@ io.on("connection", (socket) => {
       users: getRoomUsers(user.room),
     });
 
-    if(!rooms[user.room]){
-      rooms[user.room] = {
-        codeData: '',
-        inputData: '',
-        outputData: '',
-        langData: '',
-        filenameData: ''
-      }
-    }
+    // if(!rooms[user.room]){
+    //   rooms[user.room] = {
+    //     codeData: '',
+    //     inputData: '',
+    //     outputData: '',
+    //     langData: '',
+    //     filenameData: ''
+    //   }
+    // }
+    
     socket.emit('getInstances', rooms[user.room]);
   });
 
