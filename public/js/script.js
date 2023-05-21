@@ -58,15 +58,13 @@ deafenBtn.addEventListener("click", () => {
 function getLocalStream() {
     navigator.mediaDevices.getUserMedia({ video: false, audio: true })
       .then((stream) => {
-        window.localStream = stream; // A
-        window.localAudio.srcObject = stream; // B
-        window.localAudio.autoplay = true; // C
+        window.localStream = stream;
+        window.localAudio.srcObject = stream;
+        window.localAudio.autoplay = true;
       })
       .catch((err) => {
         if (err.name === 'NotAllowedError') {
-          // User blocked the audio permission
           muteBtn.disabled = true;
-          
         } else {
             muteBtn.disabled = false;
         }

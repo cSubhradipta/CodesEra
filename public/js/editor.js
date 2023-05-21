@@ -2,7 +2,6 @@ let codeEditor = ace.edit("code");
 let inputField = ace.edit("input");
 let outputField = ace.edit("output");
 
-// var themeName = "tomorrow_night_blue";
 let theme = "ace/theme/dracula";
 var fontSize = "12pt";
 
@@ -70,45 +69,20 @@ function filenameGenerator(){
 
 function downloadTextFile() {
     let text = codeEditor.getValue();
-    const blob = new Blob([text], { type: "text/plain" }); // Create a Blob with the text content
-    const url = URL.createObjectURL(blob); // Create a URL for the Blob
+    const blob = new Blob([text], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filenameGenerator();
   
-    const link = document.createElement("a"); // Create a link element
-    link.href = url; // Set the URL as the link's href
-
-    // let lang = document.getElementById('lang').value;
-    // let filename = document.getElementById('filename').value;
-    // let savefilename;
-    // if(filename == ''){
-    //     savefilename = room + '.' + (lang == '' ? 'txt' : lang);
-    // } else {
-    //     if(filename.includes('.')){
-    //         savefilename = filename.split(".")[0] + '.' + lang;
-    //     } else {
-    //         savefilename = filename;
-    //     }
-    // }
-
-    link.download = filenameGenerator(); // Set the desired file name
-  
-    document.body.appendChild(link); // Append the link to the document body
-    link.click(); // Simulate a click event on the link
-    document.body.removeChild(link); // Remove the link from the document body
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
 
 const downloadCodeBtn = document.getElementById('code-download');
 downloadCodeBtn.addEventListener("click", downloadTextFile);
 
-
-
-// let cppCode = '#include<iostream>\nusing namespace std;\nint main(){\n\tint a = 5, b = 10, c\n\tc = a+b;\n\tcout<<"Sum = "<<c;\n\treturn 0;\n}';
-// let cCode = '#include <stdio.h>\nint main(){\n\tint a, b, c;\n\tscanf("%d %d", &a, &b);\n\tc = a + b;\n\tprintf("Sum = %d", c);\n\treturn 0;\n}';
-
-// let PythonCode = 'def main():\n\tprint("Hello, World!")\n\nif _name_ == "_main_":\n\tmain()'
-
-// let Csharpcode = 'using System;\nnamespace YourNamespace\n{\n\tclass Program\n\t{\n\t\tstatic void Main(string[] args)\n\t\t{\n\t\t\tConsole.WriteLine("Hello, World!");\n\t\t\tConsole.ReadKey();\n\t\t}\n\t}\n}'
-
-// let JavaCode = "import java.util.Scanner;\nimport java.util.*;\n{\t\npublic static void main(String args[])\n{\t//statements\n}\t}"
 let editorLib = {
     init() {
         //Configure
@@ -152,10 +126,7 @@ let editorLib = {
         });
 
         outputField.setTheme(theme);
-
         outputField.session.setMode("ace/mode/c_cpp");
-        
-
         outputField.setOptions({
             fontSize: fontSize,
             showLineNumbers: false,

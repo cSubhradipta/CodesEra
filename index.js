@@ -34,13 +34,12 @@ const localStorage = new LocalStorage('./temp');
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-// Connect to MongoDB
+
 let mongodb_uri = process.env.MONGODB_URI;
 mongoose.connect(mongodb_uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('Failed to connect to MongoDB:', err));
 
-// Define User model
 const UserSchema = new mongoose.Schema({
   googleId: String,
   displayName: String,
@@ -48,7 +47,6 @@ const UserSchema = new mongoose.Schema({
   imageUrl: String
 });
 const User = mongoose.model('User', UserSchema);
-// Configure Passport.js
 passport.use(new GoogleStrategy({
   clientID: cid,
   clientSecret: csec,
@@ -72,34 +70,6 @@ passport.use(new GoogleStrategy({
   }
 }));
 
-// passport.use(
-//   new LinkedInStrategy(
-//     {
-//       clientID: lid,
-//       clientSecret: lsec,
-//       callbackURL: "/auth/linkedin/callback",
-//       scope: ["r_emailaddress", "r_liteprofile"],
-//     }, async (accessToken, refreshToken, profile, done) => {
-//       try {
-//         const existingUser = await User.findOne({ googleId: profile.id });
-//         if (existingUser) {
-//           return done(null, existingUser);
-//         }
-    
-//         const newUser = await new User({
-//           googleId: profile.id,
-//           displayName: profile.displayName,
-//           email: profile.emails[0].value,
-//           imageUrl: profile.photos[0].value
-//         }).save();
-//         done(null, newUser);
-//       } catch (err) {
-//         done(err, null);
-//       }
-//     }
-//   )
-// );
-
 app.use(session({
   name: 'normal-session',
   secret: secret_key,
@@ -119,7 +89,6 @@ passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-// Deserialize user from session
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id);
@@ -156,7 +125,6 @@ const isNotLoggedIn = (req, res, next) => {
     next();
   };
 
-// Home route
 app.get('/', (req, res) => {
   localStorage.removeItem('roomId');
   res.render('index');
@@ -166,10 +134,8 @@ app.get('/login', isLoggedIn, function(req, res) {
   res.render('login');
 });
 
-// Google OAuth2 route
 app.get('/auth/google', cors(), passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// Google OAuth2 callback route
 app.get('/auth/google/callback', cors(), passport.authenticate('google', {
   failureRedirect: '/login'
 }), function(req, res) {
@@ -190,43 +156,10 @@ app.get('/auth/google/callback', cors(), passport.authenticate('google', {
   
 });
 
-
-// app.get(
-//   "/auth/linkedin",
-//   passport.authenticate("linkedin", { state: "SOME STATE" })
-// );
-
-
-// app.get(
-//   "/auth/linkedin/callback",
-//   passport.authenticate("linkedin", {
-//     failureRedirect: "/login"
-//   }), function(req, res) {
-//     const roomId = localStorage.getItem('roomId');
-//     if(roomId == "undefined") roomId = undefined;
-//     console.log("After auth from locStorage: ", roomId);
-//     console.log("After auth before session: ", req.session.roomId);
-//     req.session.roomId = roomId;
-//     const set_room_id = req.session.roomId;
-//     console.log("After auth after session setting: ", req.session.roomId);
-//     localStorage.removeItem('roomId');
-//     console.log('Removed LocStorage:', localStorage.getItem('roomId'));
-//     if(set_room_id && set_room_id != undefined){
-//       res.redirect('/join/' + set_room_id);
-//     } else {
-//       res.redirect('/join');
-//     }  
-// });
-
-
-
 app.get('/join/:roomId?', isNotLoggedIn, function(req, res) {
   roomId = req.session.roomId;
   localStorage.removeItem('roomId');
   console.log("After middleware: ", roomId, req.session.roomId);
-  // if(roomId)
-  //   console.log(roomId);
-  // Get user data from Google Sign-In
   const userData = {
     name: req.user.displayName,
     imageUrl: req.user.imageUrl,
@@ -234,18 +167,14 @@ app.get('/join/:roomId?', isNotLoggedIn, function(req, res) {
   };
   const newImgUrl = userData.imageUrl.replace("=s96-c", "=s200-c");
   console.log(userData)
-  // Render the dashboard page with the user data
   res.render('join', { userData: userData, roomId: roomId || null, userImg: newImgUrl});
 });
 
-// Logout route
 app.get('/logout', (req, res) => {
   req.logout(function(err) {
     if (err) {
-      // Handle error
       return;
     }
-    // User has been logged out
     res.redirect('/login');
   });
 });
@@ -267,17 +196,6 @@ app.post('/workspace', function(req, res){
   req.session.roomId = room;
   res.render('workspace', {useremail: userData.email, username: userData.name, userimage: userData.imageUrl, room: room, userData: userData, userImg: newImgUrl});
 });
-
-// app.get('/leave', (req, res) => {
-//   const room = req.session.roomId;
-//   const confirmation = confirm('Are you sure you want to redirect?');
-//   if (confirmation) {
-//     res.redirect('/join/${room}');
-//   } else {
-//     // do something else if the user clicks "Cancel"
-//   }
-// });
-
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

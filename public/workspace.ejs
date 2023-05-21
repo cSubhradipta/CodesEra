@@ -16,16 +16,11 @@
       const useremail = '<%= userData.email %>';
       const room = '<%= room %>';
       const userimage = '<%= userData.imageUrl %>';
-      
-      // console.log("from workspace: ", userimage);
     </script>
     <div class="flex">
-
       <div class="h-screen p-4 pl-6 w-96">
-
         <div class="text-white container overflow-hidden md:rounded-lg">
           <div class="">
-            <!-- <h1 class="text-4xl text-white lg:text-3xl  font-medium">CODES<span class="text-blue-400">ERA</span></h1> -->
             <div class="font-bold text-2xl ml-2 mt-2">CODES<span class="text-blue-400">ERA</span></div>
           </div>
         </div>
@@ -37,12 +32,9 @@
 
         <div class="text-lg pb-4 text-white fixed bottom-0 w-64">
           <div class="w-full">
-            <!-- <a href="/leave"> -->
-              <button type="button" id="leave-btn" class="text-center mb-1 mx-auto px-4 py-2 bg-red-600 text-white font-medium text-sm leading-tight rounded-lg shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-700 active:shadow-lg transition duration-150 ease-in-out">Leave Room</button>
-            <!-- </a> -->
+            <button type="button" id="leave-btn" class="text-center mb-1 mx-auto px-4 py-2 bg-red-600 text-white font-medium text-sm leading-tight rounded-lg shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-700 active:shadow-lg transition duration-150 ease-in-out">Leave Room</button>
             <button type="button" id="mute-btn" class="w-9 h-9 text-center mb-1 ml-2 mx-1 bg-red-600 text-white font-medium text-md leading-tight rounded-full shadow-md hover:bg-opacity-80 hover:shadow-lg focus:bg-opacity-100 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-opacity-100 active:shadow-lg transition duration-150 ease-in-out"><i class="bi bi-mic-mute-fill"></i></button>
             <button type="button" id="deafen-btn" class="w-9 h-9 text-center mb-1 mx-1 bg-red-600 text-white font-medium text-md leading-tight rounded-full shadow-md hover:bg-opacity-80 hover:shadow-lg focus:bg-opacity-100 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-opacity-100 active:shadow-lg transition duration-150 ease-in-out"><i class="bi bi-headphones"></i></button>
-
           </div>
         </div>
         
@@ -135,56 +127,31 @@
           <div class="flex flex-col h-full">
             <div class="grow flex pt-0 p-8" style="max-height: calc(100% - 45px);">
               <div id="wb-canvas-wrapper" style="max-width: 60rem;" class="drawing-board overflow-auto form-control w-full border border-gray-600 rounded shadow-sm">
-                <!-- <canvas class="rounded m-0 p-0" id="whiteboard-canvas" width="4000" height="5000"></canvas> -->
-                <!-- <div id="canvas-wrapper"></div> -->
-                <!-- <div class="container"> -->
-                  
-                  <!-- <section class=""> -->
-                    <canvas width="1000" height="5000"></canvas>
-                  <!-- </section> -->
-                <!-- </div> -->
+                <canvas width="1000" height="5000"></canvas>
               </div> 
-
             </div>
-            
+   
             <div>
-              <section class="tools-board mx-4 text-white flex justify-around">
-                <!-- <div class="flex justify-between"> -->
-                  <!-- <label class="title">Options</label> -->
-                  <div class="colors">
-                    <!-- <label class="title">Colors</label> -->
-                    <ul class="options">
-                      <!-- <label for="color-picker">Color</label> -->
-                      <li class="option selected">
-                        
-                        <input type="color" id="color-picker" value="#4A98F7">
-                      </li>
-                    </ul>
-                  </div>
-
-                  <ul class="options flex my-1">
-                    <li class="option active tool mx-2" id="brush">
-                      <span>Pen</span>
+              <section class="tools-board mx-4 text-white flex justify-around"> 
+                <div class="colors">
+                  <ul class="options">
+                    <li class="option selected">  
+                      <input type="color" id="color-picker" value="#4A98F7">
                     </li>
-                    <li class="option tool mx-2" id="eraser">
-                      <span>Eraser</span>
-                    </li>
-                    <li class="option mx-2">
-                      <input type="range" id="size-slider" min="1" max="30" value="5">
-                    </li>
-                    <!-- <li class="option tool mx-2" id="rectangle">
-                      <span><i class="bi bi-square"></i></span>
-                    </li>
-                    <li class="option tool mx-2" id="circle">
-                      <span><i class="bi bi-circle"></i></span>
-                    </li>
-                    <li class="option tool mx-2" id="triangle">
-                      <span><i class="bi bi-triangle"></i></span>
-                    </li> -->
                   </ul>
-                <!-- </div> -->
-                
-                
+                </div>
+
+                <ul class="options flex my-1">
+                  <li class="option active tool mx-2" id="brush">
+                    <span>Pen</span>
+                  </li>
+                  <li class="option tool mx-2" id="eraser">
+                    <span>Eraser</span>
+                  </li>
+                  <li class="option mx-2">
+                    <input type="range" id="size-slider" min="1" max="30" value="5">
+                  </li>
+                </ul>  
                 <div class="row buttons">
                   <button class="clear-canvas mx-1 text-white bg-red-600 hover:bg-red-700 focus:outline-none font-normal rounded-full text-sm px-4 py-2 text-center">Reset</button>
                   <button class="save-img mx-1 text-white bg-green-600 hover:bg-green-700 focus:outline-none font-normal rounded-full text-sm px-4 py-2 text-center">Save</button>
@@ -192,14 +159,8 @@
               </section>
             </div>
           </div>
-          
-  
-          
-        
         </div>
       </div>
-
-      
 
       <div id="chat-container" class="hidden h-screen w-160 px-2 py-6 transition duration-150 ease-in-out">
         <div class="w-full h-full border border-solid rounded border-blue-400 relative">
@@ -218,7 +179,6 @@
             </div>
           </div>
           <div class="chat-form-container w-full absolute bottom-0">
-
             <form id="chat-form">   
               <div class="relative">
                   <input type="text" id="msg" class="block w-full p-3 pr-16 text-sm text-white border-t border-blue-400 bg-transparent focus:ring-blue-500 focus:border-blue-500 outline-none focus:bg-transparent active:bg-transparent" autocomplete="off" placeholder="Message" required>
@@ -227,19 +187,14 @@
                   </button>
               </div>
             </form>
-          </div>
-
-
-          
+          </div>  
         </div>
       </div>
 
       <div class="h-screen pt-8 w-24">
         <div class="flex flex-col justify-around h-full">
           <div class="flex flex-col justify-around">
-
             <div class="mx-auto">
-
               <div class="mx-auto my-4">
                 <button id="copy-room-link" data-bs-toggle="tooltip" title="Share Room Link" type="button" class="ml-1 inline-block h-10 w-10 rounded-full text-xl font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-white hover:bg-opacity-10 hover:shadow-lg focus:bg-gray-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-transparent active:shadow-lg">
                   <i class="bi bi-share-fill"></i>
@@ -286,7 +241,6 @@
     </div>
 
     <div class="hidden fixed z-50 bottom-0 right-8 m-6 max-w-sm rounded-md overflow-hidden text-white border border-blue-400 shadow-lg" id="permission">
-  
       <div class="px-6 py-4">
         <div class="flex justify-between font-bold text-xl mb-2">
           <div>Control Access</div>
@@ -314,7 +268,6 @@
       </div>
       </div>
     </div>
-
     <!-- Socket script -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.3/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.11.0/qs.min.js" integrity="sha512-/l6vieC+YxaZywUhmqs++8uF9DeMvJE61ua5g+UK0TuHZ4TkTgB1Gm1n0NiA86uEOM9JJ6JUwyR0hboKO0fCng==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -326,9 +279,6 @@
     <script src="./js/ace-editor/src-min/mode-javascript.js "></script>
     <script src="./js/ace-editor/src-min/mode-csharp.js "></script>
     <script src="./js/ace-editor/src-min/ext-language_tools.js "></script>
-
-    
-
 
     <!-- Required scripts -->
     <script src="./js/script.js"></script>
