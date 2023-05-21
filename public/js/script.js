@@ -59,7 +59,7 @@ function getLocalStream() {
         if (err.name === 'NotAllowedError') {
           // User blocked the audio permission
           muteBtn.disabled = true;
-          console.log('User blocked audio permission');
+          
         } else {
             muteBtn.disabled = false;
         }

@@ -242,7 +242,8 @@ io.on("connection", (socket) => {
         outputData: '',
         langData: '',
         filenameData: '',
-        allowOthers: true
+        allowOthers: true,
+        wbData: ''
       }
     }
     if(rooms[user.room].participants.length == 0){
@@ -295,6 +296,31 @@ io.on("connection", (socket) => {
     const user = getCurrentUser(socket.id);
 
     io.to(user.room).emit("message", formatMessage(user.username, msg));
+  });
+
+  socket.on("draw", (data) => {
+      console.log("draw_event_called", data);
+      const user = getCurrentUser(socket.id);
+      io.to(user.room).emit("ondraw", { x: data.x, y: data.y, strokeStyle: data.strokeStyle });
+     
+  });
+
+  socket.on("down", (data) => {
+    console.log("down_event_called", data);
+    const user = getCurrentUser(socket.id);
+    io.to(user.room).emit("ondown", { x: data.x, y: data.y, brushWidth: data.brushWidth, selectedColor: data.selectedColor }); 
+  });
+
+  socket.on("up", () => {
+    console.log("up_event_called");
+    const user = getCurrentUser(socket.id);
+    io.to(user.room).emit("onup"); 
+  });
+
+  socket.on("clear", () => {
+    console.log("clear_event_called");
+    const user = getCurrentUser(socket.id);
+    io.to(user.room).emit("onclear"); 
   });
 
   socket.on("disconnect", () => {

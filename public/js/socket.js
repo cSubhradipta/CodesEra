@@ -59,6 +59,17 @@ socket.on('getInstances', function(instances){
   outputField.clearSelection();
   document.getElementById('lang').value = instances.langData;
   document.getElementById('filename').value = instances.filenameData;
+  // console.log(instances.wbData);
+  // setTimeout(()=>{
+  //   console.log("canvas_setting...");
+  //   if(instances.wbData != ''){
+  //     let imgData = instances.wbData;
+  //     let myImage = new Image();
+  //     myImage.src = imgData;
+  //     ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
+  //   }
+  // }, 5000);
+  
 });
 
 const codeArea = document.getElementById('code');
@@ -112,7 +123,6 @@ socket.on('getInstances', function(instances){
   updateInstance(room, {element: 'filename', instance: instances.filenameData});
 
 
-
   var tempUser = document.getElementsByClassName('temp-user')[0].innerText;
   if(tempUser === instances.host){
     // console.log("admin: ", instances.host);
@@ -123,18 +133,27 @@ socket.on('getInstances', function(instances){
     let ipeditor = ace.edit('input');
     let langfield = document.getElementById('lang');
     let filename = document.getElementById('filename');
+    let clearCanvas = document.querySelector(".clear-canvas");
     if(instances.allowOthers == false){
       // console.log('Allow users disabled');
       editor.setOptions({readOnly : true});
       ipeditor.setOptions({readOnly : true});
       langfield.disabled = true;
       filename.readOnly = true;
+      canvas.removeEventListener("mousedown", startDraw);
+      canvas.removeEventListener("mousemove", drawing);
+      canvas.removeEventListener("mouseup", stopDraw);
+      clearCanvas.removeEventListener("click", clearDraw);
     } else {
       // console.log('Allow users enabled');
       editor.setOptions({readOnly : false});
       ipeditor.setOptions({readOnly : false});
       langfield.disabled = false;
       filename.readOnly = false;
+      canvas.addEventListener("mousedown", startDraw);
+      canvas.addEventListener("mousemove", drawing);
+      canvas.addEventListener("mouseup", stopDraw);
+      clearCanvas.addEventListener("click", clearDraw);
     }
   }
   //updateInstance(room, {element: 'filename', instance: instances.filenameData});
