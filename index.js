@@ -6,12 +6,9 @@ const session = require('express-session');
 const passport = require('passport');
 const cors = require('cors');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const LinkedInStrategy = require("passport-linkedin-oauth2").Strategy;
 const mongoose = require('mongoose');
 const cid = process.env.GOOGLE_CLIENT_ID;
 const csec = process.env.GOOGLE_CLIENT_SECRET;
-const lid = process.env.LINKEDIN_CLIENT_ID;
-const lsec = process.env.LINKEDIN_CLIENT_SECRET;
 const bodyParser = require('body-parser');
 const crypto = require('crypto');
 const secret_key = crypto.randomBytes(64).toString('hex');
@@ -75,33 +72,33 @@ passport.use(new GoogleStrategy({
   }
 }));
 
-passport.use(
-  new LinkedInStrategy(
-    {
-      clientID: lid,
-      clientSecret: lsec,
-      callbackURL: "/auth/linkedin/callback",
-      scope: ["r_emailaddress", "r_liteprofile"],
-    }, async (accessToken, refreshToken, profile, done) => {
-      try {
-        const existingUser = await User.findOne({ googleId: profile.id });
-        if (existingUser) {
-          return done(null, existingUser);
-        }
+// passport.use(
+//   new LinkedInStrategy(
+//     {
+//       clientID: lid,
+//       clientSecret: lsec,
+//       callbackURL: "/auth/linkedin/callback",
+//       scope: ["r_emailaddress", "r_liteprofile"],
+//     }, async (accessToken, refreshToken, profile, done) => {
+//       try {
+//         const existingUser = await User.findOne({ googleId: profile.id });
+//         if (existingUser) {
+//           return done(null, existingUser);
+//         }
     
-        const newUser = await new User({
-          googleId: profile.id,
-          displayName: profile.displayName,
-          email: profile.emails[0].value,
-          imageUrl: profile.photos[0].value
-        }).save();
-        done(null, newUser);
-      } catch (err) {
-        done(err, null);
-      }
-    }
-  )
-);
+//         const newUser = await new User({
+//           googleId: profile.id,
+//           displayName: profile.displayName,
+//           email: profile.emails[0].value,
+//           imageUrl: profile.photos[0].value
+//         }).save();
+//         done(null, newUser);
+//       } catch (err) {
+//         done(err, null);
+//       }
+//     }
+//   )
+// );
 
 app.use(session({
   name: 'normal-session',
@@ -194,32 +191,32 @@ app.get('/auth/google/callback', cors(), passport.authenticate('google', {
 });
 
 
-app.get(
-  "/auth/linkedin",
-  passport.authenticate("linkedin", { state: "SOME STATE" })
-);
+// app.get(
+//   "/auth/linkedin",
+//   passport.authenticate("linkedin", { state: "SOME STATE" })
+// );
 
 
-app.get(
-  "/auth/linkedin/callback",
-  passport.authenticate("linkedin", {
-    failureRedirect: "/login"
-  }), function(req, res) {
-    const roomId = localStorage.getItem('roomId');
-    if(roomId == "undefined") roomId = undefined;
-    console.log("After auth from locStorage: ", roomId);
-    console.log("After auth before session: ", req.session.roomId);
-    req.session.roomId = roomId;
-    const set_room_id = req.session.roomId;
-    console.log("After auth after session setting: ", req.session.roomId);
-    localStorage.removeItem('roomId');
-    console.log('Removed LocStorage:', localStorage.getItem('roomId'));
-    if(set_room_id && set_room_id != undefined){
-      res.redirect('/join/' + set_room_id);
-    } else {
-      res.redirect('/join');
-    }  
-});
+// app.get(
+//   "/auth/linkedin/callback",
+//   passport.authenticate("linkedin", {
+//     failureRedirect: "/login"
+//   }), function(req, res) {
+//     const roomId = localStorage.getItem('roomId');
+//     if(roomId == "undefined") roomId = undefined;
+//     console.log("After auth from locStorage: ", roomId);
+//     console.log("After auth before session: ", req.session.roomId);
+//     req.session.roomId = roomId;
+//     const set_room_id = req.session.roomId;
+//     console.log("After auth after session setting: ", req.session.roomId);
+//     localStorage.removeItem('roomId');
+//     console.log('Removed LocStorage:', localStorage.getItem('roomId'));
+//     if(set_room_id && set_room_id != undefined){
+//       res.redirect('/join/' + set_room_id);
+//     } else {
+//       res.redirect('/join');
+//     }  
+// });
 
 
 
