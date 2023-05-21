@@ -19,8 +19,19 @@ const starterCode = {
 const loadCodeBtn = document.getElementById('load-code');
 loadCodeBtn.addEventListener("click", ()=>{
     let lang = document.getElementById('lang').value;
+    let codeblock = document.getElementById('code');
     codeEditor.setValue(starterCode[lang]);
     codeEditor.clearSelection();
+    const event = new KeyboardEvent('keyup', {
+        key: 'Enter',
+        keyCode: 13,
+        code: 'Enter',
+        which: 13,
+        bubbles: true,
+        cancelable: true,
+        composed: true
+    });
+    codeblock.dispatchEvent(event);
 });
 
 const mode = {
