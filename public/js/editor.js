@@ -16,8 +16,7 @@ const starterCode = {
     'js' : 'function main() {\n\t// Your code here\n}\n\nmain();'
 };
 
-const loadCodeBtn = document.getElementById('load-code');
-loadCodeBtn.addEventListener("click", ()=>{
+function loadCode(){
     let lang = document.getElementById('lang').value;
     let codeblock = document.getElementById('code');
     codeEditor.setValue(starterCode[lang]);
@@ -32,7 +31,9 @@ loadCodeBtn.addEventListener("click", ()=>{
         composed: true
     });
     codeblock.dispatchEvent(event);
-});
+}
+const loadCodeBtn = document.getElementById('load-code');
+loadCodeBtn.addEventListener("click", loadCode);
 
 const mode = {
     '' : 'c_cpp',

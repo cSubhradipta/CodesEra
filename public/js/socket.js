@@ -134,6 +134,7 @@ socket.on('getInstances', function(instances){
     let langfield = document.getElementById('lang');
     let filename = document.getElementById('filename');
     let clearCanvas = document.querySelector(".clear-canvas");
+    let codeLoader = document.getElementById("load-code");
     if(instances.allowOthers == false){
       // console.log('Allow users disabled');
       editor.setOptions({readOnly : true});
@@ -144,6 +145,7 @@ socket.on('getInstances', function(instances){
       canvas.removeEventListener("mousemove", drawing);
       canvas.removeEventListener("mouseup", stopDraw);
       clearCanvas.removeEventListener("click", clearDraw);
+      codeLoader.removeEventListener("click", loadCode);
     } else {
       // console.log('Allow users enabled');
       editor.setOptions({readOnly : false});
@@ -154,6 +156,7 @@ socket.on('getInstances', function(instances){
       canvas.addEventListener("mousemove", drawing);
       canvas.addEventListener("mouseup", stopDraw);
       clearCanvas.addEventListener("click", clearDraw);
+      codeLoader.addEventListener("click", loadCode);
     }
   }
   //updateInstance(room, {element: 'filename', instance: instances.filenameData});
