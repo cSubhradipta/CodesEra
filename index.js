@@ -264,7 +264,7 @@ io.on("connection", (socket) => {
       rooms[room] = {};
     }
     rooms[room][element] = instance;
-    console.log(rooms);
+    // console.log(rooms);
     socket.to(room).emit('getInstances', rooms[room]);
   });
 
@@ -275,16 +275,16 @@ io.on("connection", (socket) => {
   });
 
   socket.on("draw", (data) => {
-      console.log("draw_event_called", data);
+      // console.log("draw_event_called", data);
       const user = getCurrentUser(socket.id);
-      io.to(user.room).emit("ondraw", { x: data.x, y: data.y, strokeStyle: data.strokeStyle });
+      io.to(user.room).emit("ondraw", { x: data.x, y: data.y, strokeStyle: data.strokeStyle, tempUser: data.tempUser });
      
   });
 
   socket.on("down", (data) => {
-    console.log("down_event_called", data);
+    // console.log("down_event_called", data);
     const user = getCurrentUser(socket.id);
-    io.to(user.room).emit("ondown", { x: data.x, y: data.y, brushWidth: data.brushWidth, selectedColor: data.selectedColor }); 
+    io.to(user.room).emit("ondown", { x: data.x, y: data.y, brushWidth: data.brushWidth, selectedColor: data.selectedColor, tempUser: data.tempUser }); 
   });
 
   // socket.on("up", () => {
@@ -294,7 +294,7 @@ io.on("connection", (socket) => {
   // });
 
   socket.on("clear", () => {
-    console.log("clear_event_called");
+    // console.log("clear_event_called");
     const user = getCurrentUser(socket.id);
     io.to(user.room).emit("onclear"); 
   });

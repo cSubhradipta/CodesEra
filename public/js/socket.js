@@ -7,6 +7,8 @@ const userList = document.getElementById('users');
 //   ignoreQueryPrefix: true,
 // }); 
 
+let isCanvasBlank = true;
+
 let url = "https://codesera.onrender.com"
 // let url = "http://localhost:3000"
 
@@ -59,7 +61,18 @@ socket.on('getInstances', function(instances){
   outputField.clearSelection();
   document.getElementById('lang').value = instances.langData;
   document.getElementById('filename').value = instances.filenameData;
-  // console.log(instances.wbData);
+
+  if(isCanvasBlank){
+    // console.log("drawing canvas ...");
+    isCanvasBlank = false;
+    let myImage = new Image();
+    myImage.src = instances.wbData;
+    myImage.onload = function() {
+        ctx.drawImage(myImage, 0, 0);
+    };
+  }
+  
+  // console.log("wbdate: ", instances.wbData);
   // setTimeout(()=>{
   //   console.log("canvas_setting...");
   //   if(instances.wbData != ''){

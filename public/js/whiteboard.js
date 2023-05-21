@@ -35,7 +35,9 @@ const startDraw = (e) => {
     let x = e.offsetX;
     let y = e.offsetY;
     ctx.moveTo(x, y);
-    socket.emit("down", { x, y, brushWidth, selectedColor });
+    var tempUser = document.getElementsByClassName('temp-user')[0].innerText;
+    // console.log("user", tempUser);
+    socket.emit("down", { x, y, brushWidth, selectedColor, tempUser });
 
     //snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
     //console.log(snapshot);
@@ -53,35 +55,63 @@ const drawing = (e) => {
         strokeStyle = ctx.strokeStyle;
         
     }
-    socket.emit("draw", { x, y, strokeStyle });
+    var tempUser = document.getElementsByClassName('temp-user')[0].innerText;
+    // console
+    socket.emit("draw", { x, y, strokeStyle, tempUser });
 }
 
 const stopDraw = (e) => {
-    isDrawing = false;
+    
     // socket.emit("up");
     //let snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    // let snapshot = canvas.toDataURL();
-    // console.log(snapshot);
-    // sendInstance(room, 'wbData', snapshot);
+    let snapshot = canvas.toDataURL();
+    //console.log(snapshot);
+    sendInstance(room, 'wbData', snapshot);
+    // setTimeout(()=>{
+    //     isDrawing = false;
+    //     }, 3000);
+    isDrawing = false;
+    //ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //setCanvasBackground();
+    //console.log("called2...");
+    //let imgData = instances.wbData;
+    // let myImage = new Image();
+    // myImage.src = snapshot;
+    // //ctx.drawImage(myImage, 0, 0);
+    // myImage.onload = function() {
+    //     ctx.drawImage(myImage, 0, 0);
+    // };
+    //sendInstance(room, 'wbData', snapshot);
     //snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
     //console.log(snapshot);
 }
 
 
-socket.on("ondraw", ({ x, y, strokeStyle }) => {
+socket.on("ondraw", ({ x, y, strokeStyle, tempUser }) => {
     // console.log("ondraw_called", { x, y, strokeStyle });
-    ctx.strokeStyle = strokeStyle;
-    ctx.lineTo(x, y);
-    ctx.stroke();
+    var tempUser2 = document.getElementsByClassName('temp-user')[0].innerText;
+    // console.log("ondraw_called", { x, y, tempUser }, tempUser2);
+    if(!isDrawing && tempUser!=tempUser2){
+        ctx.strokeStyle = strokeStyle;
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    }
+    
   });
   
-socket.on("ondown", ({ x, y, brushWidth, selectedColor }) => {
-    // console.log("ondown_called", { x, y, brushWidth, selectedColor });
-    ctx.beginPath();
-    ctx.lineWidth = brushWidth;
-    ctx.strokeStyle = selectedColor;
-    //ctx.fillStyle = selectedColor;
-    ctx.moveTo(x, y);
+socket.on("ondown", ({ x, y, brushWidth, selectedColor, tempUser }) => {
+    
+    var tempUser2 = document.getElementsByClassName('temp-user')[0].innerText;
+    // console.log("ondown_called", { x, y, brushWidth, selectedColor, tempUser }, tempUser2);
+    if(!isDrawing && tempUser!=tempUser2){
+        // console.log("calling...");
+        ctx.beginPath();
+        ctx.lineWidth = brushWidth;
+        ctx.strokeStyle = selectedColor;
+        ctx.fillStyle = selectedColor;
+        ctx.moveTo(x, y);
+    }
+    
   });
 
 //   socket.on("onup", () => {
