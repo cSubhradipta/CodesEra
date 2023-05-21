@@ -68,7 +68,7 @@ const drawing = (e) => {
 
 const stopDraw = (e) => {
     isDrawing = false;
-    socket.emit("up");
+    // socket.emit("up");
     //let snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
     // let snapshot = canvas.toDataURL();
     // console.log(snapshot);
@@ -94,10 +94,10 @@ socket.on("ondown", ({ x, y, brushWidth, selectedColor }) => {
     ctx.moveTo(x, y);
   });
 
-  socket.on("onup", () => {
-    // console.log("onup_called");
-    isDrawing = false;
-  });
+//   socket.on("onup", () => {
+//     // console.log("onup_called");
+//     isDrawing = false;
+//   });
 
   socket.on("onclear", () => {
     // console.log("onclear_called");
