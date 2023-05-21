@@ -23,6 +23,13 @@ chatCloseBtn.addEventListener("click", () => {
 wbBtn.addEventListener("click", () => {
     wbContainer.classList.toggle('hidden');
     csContainer.classList.toggle('hidden');
+    if (wbBtn.innerHTML == `<i class="bi bi-pencil-fill"></i>`){
+        wbBtn.innerHTML = `<i class="bi bi-code-slash"></i>`;
+        wbBtn.setAttribute("title", "Code Editor");
+    } else {
+        wbBtn.innerHTML = `<i class="bi bi-pencil-fill"></i>`;
+        wbBtn.setAttribute("title", "Whiteboard");
+    }
 });
 
 const muteBtn = document.getElementById('mute-btn');

@@ -65,6 +65,7 @@
                     <option value="java">JAVA</option>
                     <option value="py">PYTHON</option>
                     <option value="cs">C#</option>
+                    <option value="js">JAVASCRIPT</option>
                   </select>
                   <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -247,28 +248,19 @@
               
               
               <div class="mx-auto my-4">
-                <button type="button" data-bs-toggle="tooltip" title="Load Starter Code" class="ml-1 inline-block h-10 w-10 rounded-full text-xl font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-white hover:bg-opacity-10 hover:shadow-lg focus:bg-gray-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-transparent active:shadow-lg">
+                <button type="button" id="load-code" data-bs-toggle="tooltip" title="Load Starter Code" class="ml-1 inline-block h-10 w-10 rounded-full text-xl font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-white hover:bg-opacity-10 hover:shadow-lg focus:bg-gray-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-transparent active:shadow-lg">
                   <i class="bi bi-braces"></i>
                 </button>
               </div>
-
-              <div class="mx-auto my-4">
-                <button data-bs-toggle="tooltip" title="Clear Editor" type="button" class="ml-1 inline-block h-10 w-10 rounded-full text-xl font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-white hover:bg-opacity-10 hover:shadow-lg focus:bg-gray-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-transparent active:shadow-lg">
-                  <i class="bi bi-arrow-clockwise"></i>
-                </button>
-              </div>
-              
               
               <div class="mx-auto my-4">
-                <button type="button" data-bs-toggle="tooltip" title="Download File" class="ml-1 inline-block h-10 w-10 rounded-full text-xl font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-white hover:bg-opacity-10 hover:shadow-lg focus:bg-gray-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-transparent active:shadow-lg">
+                <button type="button" id="code-download" data-bs-toggle="tooltip" title="Download Code" class="ml-1 inline-block h-10 w-10 rounded-full text-xl font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-white hover:bg-opacity-10 hover:shadow-lg focus:bg-gray-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-transparent active:shadow-lg">
                   <i class="bi bi-download"></i>
                 </button>
               </div>
               
               <div class="mx-auto my-4">
-                <button id="wb-btn" data-bs-toggle="tooltip" title="Whiteboard" type="button" class="ml-1 inline-block h-10 w-10 rounded-full text-xl font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-white hover:bg-opacity-10 hover:shadow-lg focus:bg-gray-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-transparent active:shadow-lg">
-                  <i class="bi bi-pencil-fill"></i>
-                </button>
+                <button id="wb-btn" data-bs-toggle="tooltip" title="Whiteboard" type="button" class="ml-1 inline-block h-10 w-10 rounded-full text-xl font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-white hover:bg-opacity-10 hover:shadow-lg focus:bg-gray-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-transparent active:shadow-lg"><i class="bi bi-pencil-fill"></i></button>
               </div>
               
               <div class="mx-auto my-4">
@@ -332,6 +324,7 @@
     <script src="./js/ace-editor/src-min/mode-python.js "></script>
     <script src="./js/ace-editor/src-min/mode-java.js "></script>
     <script src="./js/ace-editor/src-min/mode-javascript.js "></script>
+    <script src="./js/ace-editor/src-min/mode-csharp.js "></script>
     <script src="./js/ace-editor/src-min/ext-language_tools.js "></script>
 
     
