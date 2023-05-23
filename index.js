@@ -205,14 +205,14 @@ const botName = "CodesEra";
 let rooms = {};
 io.on("connection", (socket) => {
 
-  socket.on("joinRoom", ({username, room}) => {
-    console.log(`User ${username} joined room ${room} with email`);
-    const user = userJoin(socket.id, username, room);
+  socket.on("joinRoom", ({username, useremail, userimage, room}) => {
+    console.log(`User ${username} joined room ${room} with email ${useremail} and image ${userimage}`);
+    const user = userJoin(socket.id, useremail, userimage, username, room);
     // socket.join(user.room);
     if(!rooms[user.room]){
       rooms[user.room] = {
         host: '',
-        participants: [],
+        participants: new Set(),
         codeData: '',
         inputData: '',
         outputData: '',
@@ -222,11 +222,11 @@ io.on("connection", (socket) => {
         wbData: ''
       }
     }
-    if(rooms[user.room].participants.length == 0){
-      rooms[user.room].host = user.username;
+    if(rooms[user.room].participants.size == 0){
+      rooms[user.room].host = user.useremail;
     }
-    rooms[user.room].participants.push(user.username);
-    // console.log(user);
+    rooms[user.room].participants.add(user.useremail);
+    console.log(rooms);
     // console.log(user.userimage);
     // rooms[room].participants.push(username);
     socket.join(user.room);
@@ -235,7 +235,7 @@ io.on("connection", (socket) => {
       .to(user.room)
       .emit(
         "message",
-        formatMessage(botName, `${user.username} joined`)
+        formatMessage(botName, 'codesera.onrender.com', `${user.username} joined`)
       );
 
     io.to(user.room).emit("roomUsers", {
@@ -271,7 +271,7 @@ io.on("connection", (socket) => {
   socket.on("chatMessage", (msg) => {
     const user = getCurrentUser(socket.id);
 
-    io.to(user.room).emit("message", formatMessage(user.username, msg));
+    io.to(user.room).emit("message", formatMessage(user.username, user.useremail, msg));
   });
 
   socket.on("draw", (data) => {
@@ -305,7 +305,7 @@ io.on("connection", (socket) => {
     if (user) {
       io.to(user.room).emit(
         "message",
-        formatMessage(botName, `${user.username} left`)
+        formatMessage(botName, 'codesera.onrender.com', `${user.username} left`)
       );
 
       io.to(user.room).emit("roomUsers", {

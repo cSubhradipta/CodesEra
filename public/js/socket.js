@@ -44,7 +44,7 @@ function updateInstance(room, data){
 const dp_img = userimage;
 // console.log(username, room, userimage);
 // console.log(typeof(userimage));
-socket.emit('joinRoom', {username, room});
+socket.emit('joinRoom', {username, useremail, userimage, room});
 socket.emit('getInstance', room); //need to check
 
 socket.on('roomUsers', ({ room, users }) => {
@@ -231,7 +231,7 @@ function outputMessage(message) {
       div.innerHTML = `
         <div class="p-2">
             <div class="flex justify-start pt-1 pb-3 font-medium items-end text-sm">
-                <div id="username" class="">${message.username == username ? "You" : firstName(message.username)}</div>
+                <div id="username" class="">${message.useremail == useremail ? "You" : firstName(message.username)}</div>
                 <div id="time" class="text-gray-500 text-xs pl-2 text-right">${message.time}</div>
             </div>
             <div class="">${message.text}</div>
@@ -279,10 +279,11 @@ function outputUsers(users) {
     const div = document.createElement('div');
     div.classList.add('user', 'flex', 'w-full', 'text-white', 'text-sm', 'my-4');
     div.innerHTML = `
-        <!-- <img src="${user.userimage}" alt="${user.username}" class="user_avatar rounded-full" style="width: 25px; height: 25px; position: relative;"> -->
-        <div class="user_badge  flex justify-center items-center bg-blue-700 w-8 h-8 py-auto text-center font-medium uppercase rounded-full">` + createAvatar(user.username) + `</div>
-        <div class="user_name flex items-center pl-2 text-` + ((user.username !== username) ? "white" : "blue-400") + ((user.username !== username) ? " " : " temp-user") + ` font-medium" style="flex-wrap: wrap;"><p style="max-width: 175px; flex-shrink: 0; width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.username}</p></div>
-    `;
+        <img src="${user.userimage}" alt="${user.username}" class="user_avatar rounded-full" style="width: 25px; height: 25px; position: relative;" referrerpolicy="no-referrer">
+        <!-- <div class="user_badge  flex justify-center items-center bg-blue-700 w-8 h-8 py-auto text-center font-medium uppercase rounded-full">` + createAvatar(user.username) + `</div> -->
+        <div class="user_name flex items-center pl-2 text-` + ((user.useremail !== useremail) ? "white" : "blue-400") + ` font-medium" style="flex-wrap: wrap;"><p style="max-width: 175px; flex-shrink: 0; width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${user.username}</p></div>
+        <div class="hidden` + ((user.useremail !== useremail) ? " " : " temp-user") + `">${user.useremail}</div>
+        `;
     userList.appendChild(div);
   });
 }
